@@ -108,6 +108,25 @@
   .save-box h3{margin:0 0 4px;font-size:13.5px}
   .save-box p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
   .foot{color:var(--muted);font-size:12px;line-height:1.6;text-align:center;padding:16px 8px 0}
+  /* Dot details */
+  .gdot{cursor:pointer;outline:none}
+  .gdot .hit{fill:transparent}
+  .gdot.sel .face{stroke:var(--text);stroke-width:3}
+  .gdot:focus-visible .face{stroke:var(--text);stroke-width:3}
+  .dot-panel{margin:2px 16px 12px;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+  .dot-panel[hidden]{display:none}
+  .dp-head{display:flex;align-items:center;gap:8px}
+  .dp-dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto}
+  .dp-label{font-weight:800;font-size:14.5px}
+  .dp-close{margin-left:auto;appearance:none;border:1px solid var(--line);background:var(--card);color:var(--text);width:28px;height:28px;border-radius:50%;font-size:15px;line-height:1;cursor:pointer;flex:0 0 auto}
+  .dp-price{font-size:16px;font-weight:800;margin-top:6px;font-variant-numeric:tabular-nums}
+  .dp-price span{font-weight:600;color:var(--muted);font-size:13px}
+  .dp-signal{font-weight:800;font-size:14px;margin-top:2px}
+  .dp-grade{margin-top:2px;font-size:13.5px;font-weight:700}
+  .dp-note{color:var(--muted);font-size:12.5px;line-height:1.5;margin-top:5px}
+  .dp-jump{appearance:none;border:0;background:none;padding:0;font:inherit;font-size:12.5px;color:var(--blue);cursor:pointer;text-decoration:underline;text-underline-offset:2px;margin-top:7px}
+  .check.flash{animation:dpflash 1.8s ease}
+  @keyframes dpflash{0%,55%{background:var(--amber-bg)}100%{background:transparent}}
   /* Modal */
   .modal{position:fixed;inset:0;background:rgba(5,8,15,.72);display:none;align-items:center;justify-content:center;padding:14px;z-index:50}
   .modal.open{display:flex}
@@ -136,7 +155,7 @@
   <!-- PRICE GRAPH -->
   <section class="card" aria-labelledby="graph-h">
     <div class="card-head">
-      <div><h2 id="graph-h">Price Graph</h2><p>Oct 29 – Nov 5 · Big dots = 2-hour checks</p></div>
+      <div><h2 id="graph-h">Price Graph</h2><p>Oct 29 – Nov 5 · Big dots = 2-hour checks · Tap a dot for details</p></div>
       <button class="zoom-btn" id="zoomBtn" type="button">Tap to zoom</button>
     </div>
     <div class="graph-wrap" id="graphWrap">
@@ -193,6 +212,7 @@
         <g font-size="11" fill="var(--muted)"><text x="104" y="390" text-anchor="middle">Oct 29</text><text x="238" y="390" text-anchor="middle">Oct 30</text><text x="360" y="390" text-anchor="middle">Nov 2</text><text x="498" y="390" text-anchor="middle">Nov 3</text><text x="662" y="390" text-anchor="middle">Nov 4</text><text x="860" y="390" text-anchor="middle">Nov 5</text></g>
       </svg>
     </div>
+    <div class="dot-panel" id="dotPanel" hidden></div>
     <div class="legend"><span><b>Line</b> = price</span><span>·</span><span><b>✓</b> good</span><span>·</span><span><b>✗</b> bad</span><span>·</span><span><b>–</b> flat</span><span>·</span><span>Newest dot is graded at the next check</span></div>
   </section>
 
@@ -231,6 +251,7 @@
   <div class="modal-card" id="modalCard">
     <div class="modal-top"><b>Price Graph — QQQ</b><button class="x" id="closeX" type="button" aria-label="Close">×</button></div>
     <div id="modalGraph"></div>
+    <div class="dot-panel" id="dotPanelM" hidden></div>
     <a href="#" class="close-link" id="closeLink">Close</a>
   </div>
 </div>
@@ -244,10 +265,120 @@
       if(el) el.classList.toggle('open');
     });
   });
+
+  // ---- Graph dot details (same details the Muse version shows on tap) ----
+  // One entry per big dot, in graph order (oldest → newest).
+  // detail = id of the matching check's detail box in Recent checks.
+  var EARLY = 'Earlier check plotted on the graph — it is not in the Recent checks list below, so its price is read from the graph.';
+  var DOTS = [
+    {label:'Thu Oct 29 · 2pm', price:'$715.20', signal:'HOLD', gradeLine:'✓ Good signal', gradeCls:'good', detail:'n11'},
+    {label:'Thu, Oct 29', price:'≈ $714', signal:'HOLD', gradeLine:'✗ Bad signal', gradeCls:'bad', note:EARLY},
+    {label:'Fri, Oct 30', price:'≈ $703', signal:'HOLD', gradeLine:'✗ Bad signal', gradeCls:'bad', note:EARLY},
+    {label:'Fri, Oct 30', price:'≈ $692', signal:'SELL', gradeLine:'✗ Bad signal', gradeCls:'bad', note:EARLY},
+    {label:'Fri Oct 30 · 4pm', price:'$684.20', signal:'SELL', gradeLine:'✗ Bad signal · +$10.04 by next check', gradeCls:'bad', detail:'n10'},
+    {label:'Mon, Nov 2', price:'≈ $698', signal:'SELL', gradeLine:'✗ Bad signal', gradeCls:'bad', note:EARLY},
+    {label:'Mon Nov 2 · 10am', price:'$694.24', chg:'+0.54% today', signal:'SELL', gradeLine:'✓ Good signal · −$1.82 by next check', gradeCls:'good', detail:'n9'},
+    {label:'Mon Nov 2 · 12pm', price:'$692.42', chg:'+0.28% today', signal:'SELL', gradeLine:'✓ Good signal · −$6.02 by next check', gradeCls:'good', detail:'n8'},
+    {label:'Mon Nov 2 · 2pm', price:'$686.40', chg:'−0.59% today', signal:'SELL', gradeLine:'✓ Good signal · −$5.31 by next check', gradeCls:'good', detail:'n7'},
+    {label:'Mon Nov 2 · 4pm', price:'$681.09', chg:'−1.36% today', signal:'SELL', gradeLine:'— Flat · $0.00 by next check', gradeCls:'flat', detail:'n6'},
+    {label:'Tue Nov 3 · 8am · Pre-market', price:'$681.09', signal:'HOLD', gradeLine:'✗ Bad signal · +$5.98 by next check', gradeCls:'bad', detail:'n5'},
+    {label:'Tue Nov 3 · 12pm', price:'$687.07', chg:'+0.88% today', signal:'SELL', gradeLine:'✓ Good signal · −$0.38 by next check', gradeCls:'good', detail:'n4'},
+    {label:'Tue Nov 3 · 2pm', price:'$686.69', chg:'+0.82% today', signal:'SELL', gradeLine:'✓ Good signal · −$1.41 by next check', gradeCls:'good', detail:'n3'},
+    {label:'Tue Nov 3 · 4pm', price:'$685.28', chg:'+0.62% today', signal:'SELL', gradeLine:'— Flat · $0.00 by next check', gradeCls:'flat', detail:'n2'},
+    {label:'Wed Nov 4 · 8am · Pre-market', price:'$685.28', chg:'+0.62% today', signal:'HOLD', gradeLine:'✗ Bad signal · +$12.14 by next check', gradeCls:'bad', detail:'n1'},
+    {label:'Wed Nov 4 · 10am', price:'$697.42', chg:'+1.77% today', signal:'SELL', gradeLine:'✓ Good signal · −$2.59 by next check', gradeCls:'good', detail:'n0'},
+    {label:'Wed Nov 4 · 12pm', price:'$694.83', chg:'+1.39% today', signal:'SELL', gradeLine:'✓ Good signal · −$1.15 by next check', gradeCls:'good', detail:'n12'},
+    {label:'Wed Nov 4 · 2pm', price:'$693.68', chg:'+1.23% today', signal:'SELL', gradeLine:'✓ Good signal · −$1.73 by next check', gradeCls:'good', detail:'n13'},
+    {label:'Wed Nov 4 · 4pm', price:'$691.95', chg:'+0.97% today', signal:'SELL', gradeLine:'— Flat · $0.00 by next check', gradeCls:'flat', detail:'n14'},
+    {label:'Thu Nov 5 · 8am · Pre-market', price:'$691.95', chg:'+0.97%', signal:'HOLD', gradeLine:'✗ Bad signal · −$32.25 by next check', gradeCls:'bad', detail:'n15'},
+    {label:'Thu Nov 5 · 10am', price:'$659.70', chg:'−4.66% today', signal:'SELL', gradeLine:'✓ Good signal · −$4.62 by next check', gradeCls:'good', detail:'n16'},
+    {label:'Thu Nov 5 · 12pm', price:'$655.08', chg:'−5.33% today', signal:'SELL', gradeLine:'Not graded yet — graded at the next check', gradeCls:'pending', detail:'n17'}
+  ];
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var src = document.querySelector('#graphWrap svg');
+  // Make every big dot tappable: fat invisible hit area + label, in graph order
+  if(src){
+    var dotGroups = [];
+    src.querySelectorAll('g').forEach(function(g){
+      if(g.querySelector(':scope > circle')) dotGroups.push(g);
+    });
+    dotGroups.forEach(function(g, i){
+      var d = DOTS[i];
+      var face = g.querySelector(':scope > circle');
+      if(!d || !face) return;
+      g.classList.add('gdot');
+      g.setAttribute('data-idx', i);
+      g.setAttribute('tabindex', '0');
+      g.setAttribute('role', 'button');
+      g.setAttribute('aria-label', d.label + ' — ' + d.signal + ' ' + d.price);
+      face.classList.add('face');
+      var hit = document.createElementNS(SVGNS, 'circle');
+      hit.setAttribute('cx', face.getAttribute('cx'));
+      hit.setAttribute('cy', face.getAttribute('cy'));
+      hit.setAttribute('r', '17');
+      hit.setAttribute('class', 'hit');
+      g.insertBefore(hit, face);
+      var title = document.createElementNS(SVGNS, 'title');
+      title.textContent = d.label + ' — ' + d.signal + ' ' + d.price;
+      g.insertBefore(title, g.firstChild);
+    });
+  }
+  var panels = [document.getElementById('dotPanel'), document.getElementById('dotPanelM')];
+  function panelHTML(d){
+    var dotBg = d.signal === 'SELL' ? 'var(--red)' : d.signal === 'BUY' ? 'var(--blue)' : 'var(--amber-dot)';
+    var sigColor = d.signal === 'SELL' ? 'var(--red)' : d.signal === 'BUY' ? 'var(--blue)' : 'var(--amber)';
+    var gradeColor = d.gradeCls === 'good' ? 'var(--green)' : d.gradeCls === 'bad' ? 'var(--red)' : 'var(--muted)';
+    var h = '<div class="dp-head"><span class="dp-dot" style="background:' + dotBg + '"></span><span class="dp-label">' + d.label + '</span><button type="button" class="dp-close" aria-label="Close details">×</button></div>';
+    h += '<div class="dp-price">' + d.price + (d.chg ? ' <span>' + d.chg + '</span>' : '') + '</div>';
+    h += '<div class="dp-signal" style="color:' + sigColor + '">' + d.signal + (d.signal === 'SELL' ? ' — if you hold QQQ' : '') + '</div>';
+    h += '<div class="dp-grade" style="color:' + gradeColor + '">' + d.gradeLine + '</div>';
+    if(d.note) h += '<div class="dp-note">' + d.note + '</div>';
+    if(d.detail) h += '<button type="button" class="dp-jump" data-detail="' + d.detail + '">See this check in Recent checks ↓</button>';
+    return h;
+  }
+  function selectDot(idx){
+    var d = DOTS[idx];
+    if(!d) return;
+    document.querySelectorAll('.gdot').forEach(function(g){
+      g.classList.toggle('sel', g.getAttribute('data-idx') === String(idx));
+    });
+    panels.forEach(function(p){
+      if(!p) return;
+      p.innerHTML = panelHTML(d);
+      p.hidden = false;
+    });
+  }
+  function clearDot(){
+    document.querySelectorAll('.gdot.sel').forEach(function(g){ g.classList.remove('sel'); });
+    panels.forEach(function(p){ if(p) p.hidden = true; });
+  }
+  function dotFromEvent(e){
+    var t = e.target;
+    if(t && t.closest) return t.closest('.gdot');
+    return null;
+  }
+  document.addEventListener('click', function(e){
+    if(e.target.closest && e.target.closest('.dp-close')){ clearDot(); return; }
+    var jump = e.target.closest ? e.target.closest('.dp-jump') : null;
+    if(jump){
+      var det = document.getElementById(jump.getAttribute('data-detail'));
+      closeZoom();
+      if(det){
+        det.classList.add('open');
+        var li = det.closest('li');
+        if(li){
+          li.scrollIntoView({block:'center', behavior:'smooth'});
+          li.classList.remove('flash');
+          void li.offsetWidth;
+          li.classList.add('flash');
+        }
+      }
+    }
+  });
+
   // Zoom
   var modal = document.getElementById('modal');
   var modalGraph = document.getElementById('modalGraph');
-  var src = document.querySelector('#graphWrap svg');
   function openZoom(){
     modalGraph.innerHTML = '';
     if(src) modalGraph.appendChild(src.cloneNode(true));
@@ -259,7 +390,22 @@
     document.body.style.overflow = '';
   }
   document.getElementById('zoomBtn').addEventListener('click', openZoom);
-  document.getElementById('graphWrap').addEventListener('click', openZoom);
+  // Tapping a dot shows its details; tapping anywhere else on the graph zooms
+  document.getElementById('graphWrap').addEventListener('click', function(e){
+    var g = dotFromEvent(e);
+    if(g){ selectDot(Number(g.getAttribute('data-idx'))); return; }
+    openZoom();
+  });
+  modalGraph.addEventListener('click', function(e){
+    var g = dotFromEvent(e);
+    if(g) selectDot(Number(g.getAttribute('data-idx')));
+  });
+  document.addEventListener('keydown', function(e){
+    if((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('gdot')){
+      e.preventDefault();
+      selectDot(Number(e.target.getAttribute('data-idx')));
+    }
+  });
   document.getElementById('closeX').addEventListener('click', closeZoom);
   document.getElementById('closeLink').addEventListener('click', function(e){ e.preventDefault(); closeZoom(); });
   modal.addEventListener('click', function(e){ if(e.target === modal) closeZoom(); });
