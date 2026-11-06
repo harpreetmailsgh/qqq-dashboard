@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
@@ -17,7 +18,7 @@
 <style>
   :root{
     --bg:#f4f5f7; --card:#ffffff; --card2:#f8f9fb; --text:#0f172a; --muted:#64748b; --muted2:#94a3b8;
-    --line:#e6e8ec; --line2:#eef0f3;
+    --line:#e6e8ec; --line2:#eef0f3; --tab-border:#d1d5db;
     --blue:#2563eb; --amber:#d97706; --amber-bg:#fef3c7; --amber-dot:#f59e0b;
     --red:#dc2626; --red-bg:#fef2f2; --green:#15803d; --green-bg:#f0fdf4;
     --res-bg:#fee2e2; --buy-bg:#dbeafe;
@@ -27,7 +28,7 @@
   @media (prefers-color-scheme: dark){
     :root{
       --bg:#0b0e14; --card:#151a26; --card2:#1a2030; --text:#eef2f7; --muted:#9aa4b2; --muted2:#6b7686;
-      --line:#232a3d; --line2:#1e2636;
+      --line:#232a3d; --line2:#1e2636; --tab-border:#64748b;
       --amber-bg:#2a2110; --red-bg:#2a1515; --green-bg:#12291a;
       --res-bg:#3a1f22; --buy-bg:#1e2f52;
       --shadow:0 1px 3px rgba(0,0,0,.4);
@@ -41,10 +42,10 @@
   .kicker{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;display:flex;justify-content:space-between;gap:12px}
   .kicker span:last-child{letter-spacing:0;text-transform:none;font-weight:600}
   /* Tabs */
-  .tabs{display:flex;gap:4px;background:var(--card);border:1px solid #d1d5db;border-radius:999px;padding:3px;box-shadow:var(--shadow)}
-  .tab{flex:1 1 0;appearance:none;border:1px solid #d1d5db;background:transparent;color:var(--muted);font:inherit;font-size:13px;font-weight:700;padding:5px 8px;border-radius:999px;cursor:pointer;letter-spacing:-.01em}
+  .tabs{display:flex;gap:3px;background:var(--card);border:1px solid var(--tab-border);border-radius:999px;padding:3px;box-shadow:var(--shadow)}
+  .tab{flex:1 1 0;appearance:none;border:1px solid var(--tab-border);background:transparent;color:var(--muted);font:inherit;font-size:13px;font-weight:800;padding:5px 8px;border-radius:999px;cursor:pointer;letter-spacing:-.01em;line-height:1.2}
   .tab small{font-weight:600;font-size:10.5px;opacity:.75}
-  .tab[aria-selected="true"]{background:var(--text);color:var(--bg);border-color:#d1d5db}
+  .tab[aria-selected="true"]{background:var(--text);color:var(--bg);border-color:var(--tab-border)}
   .tab:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
   /* Refresh */
   .refresh-wrap{margin-left:auto;display:flex;flex-direction:column;align-items:center;gap:4px;flex:0 0 auto}
@@ -167,28 +168,28 @@
   </div>
 
   <div id="panel-qqq" role="tabpanel" aria-labelledby="tab-qqq">
-  <div class="kicker"><span>QQQ · Invesco QQQ Trust</span><span>Thu, Nov 5, 2026</span></div>
+  <div class="kicker"><span>QQQ · Invesco QQQ Trust</span><span>Fri, Nov 6, 2026</span></div>
 
   <!-- TOP SIGNAL — one row: dot + signal + price + % -->
   <div class="hero">
     <div class="signal-row">
-      <span class="dot sell" aria-hidden="true"></span>
-      <span class="signal-word">SELL</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span class="signal-word">HOLD</span>
       <span class="price">$647.05</span>
       <span class="chg down">-6.49% today</span>
-      <span class="refresh-wrap"><button class="refresh-btn" type="button" aria-label="Refresh page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></button><span class="updated">Updated<br>Thu Nov 5 · 4:00 PM</span></span>
+      <span class="refresh-wrap"><button class="refresh-btn" type="button" aria-label="Refresh page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></button><span class="updated">Updated<br>Fri Nov 6 · 8:00 AM</span></span>
     </div>
   </div>
 
   <!-- PRICE GRAPH -->
   <section class="card" aria-labelledby="graph-h">
     <div class="card-head">
-      <div><h2 id="graph-h">Price Graph</h2><p>Oct 29 – Nov 5 · Big dots = 2-hour checks · Tap a dot for details</p></div>
+      <div><h2 id="graph-h">Price Graph</h2><p>Oct 29 – Nov 6 · Big dots = 2-hour checks · Tap a dot for details</p></div>
       <button class="zoom-btn" id="zoomBtn" type="button" data-graph="qqq">Tap to zoom</button>
     </div>
     <div class="graph-wrap" id="graphWrapQ" data-graph="qqq">
       <!-- SVG chart: y-scale $640–$744 (lower scale extended so $647.05 is visible) -->
-      <svg viewBox="0 0 990 428" role="img" aria-label="QQQ price chart from $715 on October 29 falling to $647.05 on November 5, with resistance at 733 to 736 dollars, buy zone 700 to 710 dollars, danger at 694 dollars and support near 678 dollars">
+      <svg viewBox="0 0 990 428" role="img" aria-label="QQQ price chart from $715 on October 29 falling to $647.05 on November 6, with resistance at 733 to 736 dollars, buy zone 700 to 710 dollars, danger at 694 dollars and support near 678 dollars">
         <!-- bands -->
         <rect x="52" y="48.7" width="838" height="11.5" fill="var(--res-bg)" rx="2"/>
         <rect x="52" y="148.5" width="838" height="38.4" fill="var(--buy-bg)" opacity=".65" rx="2"/>
@@ -211,7 +212,7 @@
           <text x="8" y="52">$736</text><text x="8" y="152">$710</text><text x="8" y="190">$700</text><text x="8" y="214">$694</text><text x="8" y="275">$678</text><text x="8" y="349">$660</text><text x="8" y="395">$648</text>
         </g>
         <!-- faint hourly line -->
-        <polyline fill="none" stroke="var(--muted2)" stroke-width="1.6" opacity=".55" points="58,134 70,132 90,130 120,137.8 145,156 165,177.7 190,200 215,219.3 240,238 265,251.2 285,246 305,205 320,208 340,212.6 365,219.6 390,242.8 415,263.2 435,258 450,263.2 470,250 485,240.2 515,241.7 545,247.1 575,246 600,247.1 615,222 632,200.4 647,219.3 662,206.8 677,207.9 692,211.3 707,212 722,218 746,218 770,218 815,253.4 845,345.3 862,341 875,363 886,375 895,377 904,377.5 918,394.4"/>
+        <polyline fill="none" stroke="var(--muted2)" stroke-width="1.6" opacity=".55" points="58,134 70,132 90,130 120,137.8 145,156 165,177.7 190,200 215,219.3 240,238 265,251.2 285,246 305,205 320,208 340,212.6 365,219.6 390,242.8 415,263.2 435,258 450,263.2 470,250 485,240.2 515,241.7 545,247.1 575,246 600,247.1 615,222 632,200.4 647,219.3 662,206.8 677,207.9 692,211.3 707,212 722,218 746,218 770,218 815,253.4 845,345.3 862,341 875,363 886,375 895,377 904,377.5 918,394.4 932,394.4 945,394.4"/>
         <!-- check dots -->
         <g>
           <g><circle cx="70" cy="132" r="6" fill="var(--amber-dot)" stroke="var(--card)" stroke-width="2"/><text x="70" y="119" text-anchor="middle" font-size="12" font-weight="800" fill="var(--green)">✓</text></g>
@@ -237,9 +238,10 @@
           <g><circle cx="845" cy="345.3" r="6" fill="var(--red)" stroke="var(--card)" stroke-width="2"/><text x="845" y="332" text-anchor="middle" font-size="12" font-weight="800" fill="var(--green)">✓</text></g>
           <g><circle cx="875" cy="363" r="6" fill="var(--red)" stroke="var(--card)" stroke-width="2"/><text x="875" y="350" text-anchor="middle" font-size="12" font-weight="800" fill="var(--green)">✓</text></g>
           <g><circle cx="895" cy="377" r="6" fill="var(--red)" stroke="var(--card)" stroke-width="2"/><text x="895" y="364" text-anchor="middle" font-size="12" font-weight="800" fill="var(--green)">✓</text></g>
-          <g><circle cx="918" cy="394.4" r="7" fill="var(--red)" stroke="var(--text)" stroke-width="2"/></g>
+          <g><circle cx="918" cy="394.4" r="6" fill="var(--red)" stroke="var(--card)" stroke-width="2"/><text x="918" y="381" text-anchor="middle" font-size="13" font-weight="800" fill="var(--muted2)">–</text></g>
+          <g><circle cx="945" cy="394.4" r="7" fill="var(--amber-dot)" stroke="var(--text)" stroke-width="2"/></g>
         </g>
-        <g font-size="11" fill="var(--muted)"><text x="104" y="414" text-anchor="middle">Oct 29</text><text x="238" y="414" text-anchor="middle">Oct 30</text><text x="360" y="414" text-anchor="middle">Nov 2</text><text x="498" y="414" text-anchor="middle">Nov 3</text><text x="662" y="414" text-anchor="middle">Nov 4</text><text x="870" y="414" text-anchor="middle">Nov 5</text></g>
+        <g font-size="11" fill="var(--muted)"><text x="104" y="414" text-anchor="middle">Oct 29</text><text x="238" y="414" text-anchor="middle">Oct 30</text><text x="360" y="414" text-anchor="middle">Nov 2</text><text x="498" y="414" text-anchor="middle">Nov 3</text><text x="662" y="414" text-anchor="middle">Nov 4</text><text x="870" y="414" text-anchor="middle">Nov 5</text><text x="945" y="414" text-anchor="middle">Nov 6</text></g>
       </svg>
     </div>
     <div class="dot-panel" id="dotPanelQ" hidden></div>
@@ -252,7 +254,8 @@
   <section class="card" aria-labelledby="checks-h">
     <div class="card-head"><div><h2 id="checks-h">Recent checks</h2><p>Every 2 hours · Mon–Fri · 8am, 10am, 12pm, 2pm, 4pm Toronto</p></div></div>
     <ul class="checks" id="checksList">
-      <li class="check"><div class="check-main"><span class="cdot sell"></span><span class="ctime">Thu Nov 5 · 4pm</span><span class="cprice">$647.05</span><span class="cgrade pending">awaiting grade</span></div><div class="clinks"><button type="button" data-toggle="n19">News</button><button type="button" data-toggle="n19">Why SELL?</button></div><div class="cdetail" id="n19"><span>−6.49% on the day vs Wed Nov 4 close $691.95</span><br><span>News:</span> No new news<br><span>Why:</span> Below $700 with no bounce — breakdown, not a dip-buy. SELL if you hold QQQ.<br><span>Watch:</span> Exit below $700, hard invalidation $694; next support ~$678</div></li>
+      <li class="check"><div class="check-main"><span class="cdot hold"></span><span class="ctime">Fri Nov 6 · 8am</span><span class="cprice">$647.05</span><span class="cgrade pending">awaiting grade</span></div><div class="clinks"><button type="button" data-toggle="n20">News</button><button type="button" data-toggle="n20">Why HOLD?</button></div><div class="cdetail" id="n20"><span>Pre-market · −6.49% today</span><br><span>News:</span> QQQ -6.5% as investors sold AI/tech on fears election win slows data-center capex; NVDA-led chips fell 11-12%, Nasdaq futures -1.3%.<br><span>Why:</span> Pre-market moves are thin trading — judge it on the regular session. If you hold QQQ, $694 is the exit line.<br><span>Watch:</span> $700 — BUY Plan A only on bounce/reclaim of $700–$710.</div></li>
+      <li class="check"><div class="check-main"><span class="cdot sell"></span><span class="ctime">Thu Nov 5 · 4pm</span><span class="cprice">$647.05</span><span class="cgrade pending">flat –</span></div><div class="clinks"><button type="button" data-toggle="n19">News</button><button type="button" data-toggle="n19">Why SELL?</button></div><div class="cdetail" id="n19"><span>−6.49% on the day vs Wed Nov 4 close $691.95</span><br><span>Graded Fri 8am:</span> Price was unchanged at $647.05 by the 8am check — the SELL neither won nor lost, graded flat.<br><span>News:</span> No new news<br><span>Why:</span> Below $700 with no bounce — breakdown, not a dip-buy. SELL if you hold QQQ.<br><span>Watch:</span> Exit below $700, hard invalidation $694; next support ~$678</div></li>
       <li class="check"><div class="check-main"><span class="cdot sell"></span><span class="ctime">Thu Nov 5 · 2pm</span><span class="cprice">$651.49</span><span class="cgrade good">✓</span></div><div class="clinks"><button type="button" data-toggle="n18">News</button><button type="button" data-toggle="n18">Why SELL?</button></div><div class="cdetail" id="n18"><span>−5.85% on the day vs Wed Nov 4 close $691.95</span><br><span>Graded at 4pm:</span> Price fell $4.44 from $651.49 to $647.05 after the SELL — price went down after selling, so SELL was right.<br><span>News:</span> QQQ -3.87% as chip/AI earnings hit semis: NVDA -5.28%, INTC -8.31%, MSFT -2.18%, META -3.95%, AMZN -1.50%, GOOGL -0.86%; AAPL flat.<br><span>Why:</span> Below $700 with no bounce — breakdown, not a dip-buy. SELL if you hold QQQ.<br><span>Watch:</span> Exit below $700, hard invalidation $694; next support ~$678.</div></li>
       <li class="check"><div class="check-main"><span class="cdot sell"></span><span class="ctime">Thu Nov 5 · 12pm</span><span class="cprice">$655.08</span><span class="cgrade good">✓</span></div><div class="clinks"><button type="button" data-toggle="n17">News</button><button type="button" data-toggle="n17">Why SELL?</button></div><div class="cdetail" id="n17"><span>−5.33% on the day vs Wed Nov 4 close $691.95</span><br><span>Graded at 2pm:</span> Price fell $3.60 from $655.08 to $651.49 after the SELL — price went down after selling, so SELL was right.<br><span>News:</span> No new news.<br><span>Why:</span> Below $700 with no bounce — breakdown, not a dip-buy. SELL if you hold QQQ.<br><span>Watch:</span> Exit below $700, hard invalidation $694; next support ~$678.</div></li>
       <li class="check"><div class="check-main"><span class="cdot sell"></span><span class="ctime">Thu Nov 5 · 10am</span><span class="cprice">$659.70</span><span class="cgrade good">✓</span></div><div class="clinks"><button type="button" data-toggle="n16">News</button><button type="button" data-toggle="n16">Why SELL?</button></div><div class="cdetail" id="n16"><span>−4.66% on the day vs Wed Nov 4 close $691.95</span><br><span>Graded at 12pm:</span> Price fell $4.62 from $659.70 to $655.08 after the SELL — price went down after selling, so SELL was right.<br><span>News:</span> QQQ −3.87% as chip/AI selloff hits on Qualcomm, Arm, Micron results: NVDA −5.3%, MSFT −2.2%, META −4.0%, AMZN −1.5%, GOOGL −0.9%; AAPL flat.<br><span>Why:</span> Below $700 with no bounce — breakdown, not a dip-buy. SELL if you hold QQQ.<br><span>Watch:</span> Exit below $700; hard invalidation $694; next support ~$678.</div></li>
@@ -277,7 +280,7 @@
   </div><!-- /panel-qqq -->
 
   <div id="panel-sqqq" role="tabpanel" aria-labelledby="tab-sqqq" hidden>
-  <div class="kicker"><span>SQQQ · ProShares UltraPro Short QQQ (−3×)</span><span>Thu, Nov 5, 2026</span></div>
+  <div class="kicker"><span>SQQQ · ProShares UltraPro Short QQQ (−3×)</span><span>Fri, Nov 6, 2026</span></div>
 
   <!-- TOP SIGNAL — one row: dot + signal + price + % -->
   <div class="hero">
@@ -286,7 +289,7 @@
       <span class="signal-word">HOLD</span>
       <span class="price">$49.55</span>
       <span class="chg">+19.23% today</span>
-      <span class="refresh-wrap"><button class="refresh-btn" type="button" aria-label="Refresh page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></button><span class="updated">Updated<br>Thu Nov 5 · 4:00 PM</span></span>
+      <span class="refresh-wrap"><button class="refresh-btn" type="button" aria-label="Refresh page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></button><span class="updated">Updated<br>Fri Nov 6 · 8:00 AM</span></span>
     </div>
   </div>
 
@@ -332,7 +335,8 @@
   <section class="card" aria-labelledby="checks-h-s">
     <div class="card-head"><div><h2 id="checks-h-s">Recent checks</h2><p>Every 2 hours · Mon–Fri · 8am, 10am, 12pm, 2pm, 4pm Toronto · SQQQ tracking started Thu Nov 5</p></div></div>
     <ul class="checks">
-      <li class="check"><div class="check-main"><span class="cdot hold"></span><span class="ctime">Thu Nov 5 · 4pm</span><span class="cprice">$49.55</span><span class="cgrade pending">awaiting grade</span></div><div class="clinks"><button type="button" data-toggle="s5">News</button><button type="button" data-toggle="s5">Why HOLD?</button></div><div class="cdetail" id="s5"><span>+19.23% on the day vs Wed close</span><br><span>News:</span> No new news.<br><span>Why:</span> No SQQQ buy trigger — SQQQ is bought only when QQQ fails a bounce at $700–$710, and today QQQ broke down without bouncing into that zone.<br><span>Watch:</span> Exit trigger: QQQ reclaims $710–$715. SQQQ is a −3× daily fund — day-trade only, not a hold.</div></li>
+      <li class="check"><div class="check-main"><span class="cdot hold"></span><span class="ctime">Fri Nov 6 · 8am</span><span class="cprice">$49.55</span><span class="cgrade pending">awaiting grade</span></div><div class="clinks"><button type="button" data-toggle="s6">News</button><button type="button" data-toggle="s6">Why HOLD?</button></div><div class="cdetail" id="s6"><span>Pre-market · +19.23% today</span><br><span>News:</span> QQQ -6.5% as investors sold AI/tech on fears election win slows data-center capex; NVDA-led chips fell 11-12%, Nasdaq futures -1.3%.<br><span>Why:</span> Pre-market moves are thin trading — judge it on the regular session, and there was no failed-bounce buy trigger yet.<br><span>Watch:</span> Buy trigger: QQQ fails a bounce at $700–$710; exit if QQQ reclaims $710–$715. SQQQ is a −3× daily fund — day-trade only, not a hold.</div></li>
+      <li class="check"><div class="check-main"><span class="cdot hold"></span><span class="ctime">Thu Nov 5 · 4pm</span><span class="cprice">$49.55</span><span class="cgrade good">✓</span></div><div class="clinks"><button type="button" data-toggle="s5">News</button><button type="button" data-toggle="s5">Why HOLD?</button></div><div class="cdetail" id="s5"><span>+19.23% on the day vs Wed close</span><br><span>Graded Fri 8am:</span> SQQQ was unchanged at $49.55 by the next check — a $0.00 move, inside SQQQ's $1 flat band, so HOLD was right.<br><span>News:</span> No new news.<br><span>Why:</span> No SQQQ buy trigger — SQQQ is bought only when QQQ fails a bounce at $700–$710, and today QQQ broke down without bouncing into that zone.<br><span>Watch:</span> Exit trigger: QQQ reclaims $710–$715. SQQQ is a −3× daily fund — day-trade only, not a hold.</div></li>
       <li class="check"><div class="check-main"><span class="cdot hold"></span><span class="ctime">Thu Nov 5 · 2pm</span><span class="cprice">$48.87</span><span class="cgrade good">✓</span></div><div class="clinks"><button type="button" data-toggle="s4">News</button><button type="button" data-toggle="s4">Why HOLD?</button></div><div class="cdetail" id="s4"><span>+17.59% on the day vs Wed Nov 4 close $42.75</span><br><span>Graded at 4pm:</span> SQQQ rose $0.68 to $49.55 by the next check — inside SQQQ's $1 flat band, so HOLD was right.<br><span>News:</span> QQQ -3.87% as chip/AI earnings hit semis: NVDA -5.28%, INTC -8.31%, MSFT -2.18%, META -3.95%, AMZN -1.50%, GOOGL -0.86%; AAPL flat.<br><span>Why:</span> No SQQQ buy trigger — SQQQ is bought only when QQQ fails a bounce at $700–$710, and today QQQ broke down without bouncing into that zone.<br><span>Watch:</span> Exit trigger: QQQ reclaims $710–$715. SQQQ is a −3× daily fund — day-trade only, not a hold.</div></li>
       <li class="check"><div class="check-main"><span class="cdot hold"></span><span class="ctime">Thu Nov 5 · 12pm</span><span class="cprice">$48.20</span><span class="cgrade good">✓</span></div><div class="clinks"><button type="button" data-toggle="s3">News</button><button type="button" data-toggle="s3">Why HOLD?</button></div><div class="cdetail" id="s3"><span>+15.98% on the day vs Wed Nov 4 close $42.75</span><br><span>Graded at 2pm:</span> SQQQ rose $0.67 to $48.87 by the next check — inside SQQQ's $1 flat band, so HOLD was right.<br><span>News:</span> No new news.<br><span>Why:</span> No SQQQ buy trigger — SQQQ is bought only when QQQ fails a bounce at $700–$710, and today QQQ broke down without bouncing into that zone.<br><span>Watch:</span> Exit trigger: QQQ reclaims $710–$715. SQQQ is a −3× daily fund — day-trade only, not a hold.</div></li>
       <li class="check"><div class="check-main"><span class="cdot hold"></span><span class="ctime">Thu Nov 5 · 10am</span><span class="cprice">$47.39</span><span class="cgrade good">✓</span></div><div class="clinks"><button type="button" data-toggle="s2">News</button><button type="button" data-toggle="s2">Why HOLD?</button></div><div class="cdetail" id="s2"><span>+14.03% on the day vs Wed Nov 4 close $42.75</span><br><span>Graded at 12pm:</span> SQQQ rose $0.81 to $48.20 by the next check — inside SQQQ's $1 flat band, so HOLD was right.<br><span>News:</span> QQQ −3.87% as chip/AI selloff hits on Qualcomm, Arm, Micron results: NVDA −5.3%, MSFT −2.2%, META −4.0%, AMZN −1.5%, GOOGL −0.9%; AAPL flat.<br><span>Why:</span> A big up day for SQQQ, but no buy trigger — no failed QQQ bounce at $700–$710; QQQ fell straight through, so the trigger never fired.<br><span>Watch:</span> Exit trigger: QQQ reclaims $710–$715.</div></li>
@@ -342,7 +346,7 @@
   </div><!-- /panel-sqqq -->
 
 
-  <p class="foot">Price first (levels + last ~2 hours’ direction); news second, never alone. Levels stay fixed — Buy $700–$710 · Danger $694 · Support ~$678 · Resistance $733–$736 — and only change on a big, lasting break. On a BUY, the stop is shown as a dollar price first, then trails 2% below the highest price since the buy. SQQQ: buy only on a failed bounce at $700–$710, exit if QQQ reclaims $710–$715. SQQQ is the −3× inverse of QQQ — it rises about 3% for each 1% QQQ falls in a day (and falls about 3% when QQQ rises); its dashboard starts Thu Nov 5, 2026, so it shows no earlier history. Its HOLD grades use a $1 flat band, since SQQQ swings about 3× QQQ.<br>Snapshot: Thu, Nov 5, 2026 · 4:00 PM check, America/Toronto · QQQ $647.05 (−6.49%) · SQQQ $49.55 (+19.23%) · For information only — not financial advice.</p>
+  <p class="foot">Price first (levels + last ~2 hours’ direction); news second, never alone. Levels stay fixed — Buy $700–$710 · Danger $694 · Support ~$678 · Resistance $733–$736 — and only change on a big, lasting break. On a BUY, the stop is shown as a dollar price first, then trails 2% below the highest price since the buy. SQQQ: buy only on a failed bounce at $700–$710, exit if QQQ reclaims $710–$715. SQQQ is the −3× inverse of QQQ — it rises about 3% for each 1% QQQ falls in a day (and falls about 3% when QQQ rises); its dashboard starts Thu Nov 5, 2026, so it shows no earlier history. Its HOLD grades use a $1 flat band, since SQQQ swings about 3× QQQ.<br>Snapshot: Fri, Nov 6, 2026 · 8:00 AM check, America/Toronto · QQQ $647.05 (−6.49%) · SQQQ $49.55 (+19.23%) · For information only — not financial advice.</p>
 </div>
 
 <!-- Zoom modal -->
@@ -393,7 +397,8 @@
     {label:'Thu Nov 5 · 10am', price:'$659.70', chg:'−4.66% today', signal:'SELL', gradeLine:'✓ Good signal · −$4.62 by next check', gradeCls:'good', detail:'n16'},
     {label:'Thu Nov 5 · 12pm', price:'$655.08', chg:'−5.33% today', signal:'SELL', gradeLine:'✓ Good signal · −$3.60 by next check', gradeCls:'good', detail:'n17'},
     {label:'Thu Nov 5 · 2pm', price:'$651.49', chg:'−5.85% today', signal:'SELL', gradeLine:'✓ Good signal · −$4.44 by next check', gradeCls:'good', detail:'n18'},
-    {label:'Thu Nov 5 · 4pm', price:'$647.05', chg:'−6.49% today', signal:'SELL', gradeLine:'Not graded yet — graded at the next check', gradeCls:'pending', detail:'n19'}
+    {label:'Thu Nov 5 · 4pm', price:'$647.05', chg:'−6.49% today', signal:'SELL', gradeLine:'— Flat · $0.00 by next check', gradeCls:'flat', detail:'n19'},
+    {label:'Fri Nov 6 · 8am · Pre-market', price:'$647.05', chg:'−6.49% today', signal:'HOLD', gradeLine:'Not graded yet — graded at the next check', gradeCls:'pending', detail:'n20'}
   ];
   // SQQQ dots, oldest → newest. SQQQ tracking starts Thu Nov 5 — today only.
   var DOTS_S = [
